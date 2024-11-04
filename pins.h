@@ -21,7 +21,10 @@
 #define PWM6 PD4
 #define PWM7 PD5
 
-#define CAT0 PA6
-#define CAT1 PA7
+#define CATHODE_PORT PORTA
+#define CAT0_bi PIN6_bi
+#define CAT1_bi PIN7_bi
+#define CAT0_bm PIN6_bm
+#define CAT1_bm PIN7_bm
 
 #define BTN PC1

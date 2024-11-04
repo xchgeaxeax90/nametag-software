@@ -1,6 +1,49 @@
 #include <avr/io.h>
+#include <avr/interrupt.h>
 #include <util/delay.h>
 #include "pwm.h"
+#include "pins.h"
+#include "timer.h"
+
+
+void init_clock();
+void init_pins();
+
+pwm_settings_t pwm_settings;
+
+// Called periodically by TCB0 to update the multiplexing for the eyes and top LEDs
+static volatile uint8_t eye_en = 0;
+void multiplex_update(void){
+    // Toggle the multiplex driver pins
+    CATHODE_PORT.OUTTGL = CAT0_bm | CAT1_bm;
+    eye_en = ~eye_en;
+    write_pwm_multiplexed(&pwm_settings, eye_en);
+}
+
+int main(void){
+    init_clock();
+
+    init_pins();
+
+    init_pwm();
+
+    init_timer();
+
+    pwm_settings.light_l = 0x40;
+    pwm_settings.light_r = 0x20;
+    pwm_settings.face_top_l = 0x40;
+    pwm_settings.face_top_r = 0x50;
+    pwm_settings.eye_l = 0x20;
+    pwm_settings.eye_r = 0x10;
+
+    sei();
+    while(1){
+	PORTD.OUTTGL = PIN4_bm | PIN5_bm;
+	_delay_ms(100);
+
+    }
+}
+
 
 void init_clock(void){
     // Select the HF RC oscillator
@@ -17,19 +60,9 @@ void init_pins(void){
     PORTA.DIR = 0xFF;
     PORTD.DIR = PIN4_bm | PIN5_bm;
     PORTC.DIR = 0;
-}
 
-
-int main(void){
-    init_clock();
-
-    init_pins();
-
-    init_pwm();
-
-    while(1){
-	PORTD.OUTTGL = PIN4_bm | PIN5_bm;
-	_delay_ms(100);
-
-    }
+    // Select the cathode controlling the top by driving CAT1 LOW. 
+    eye_en = 0;
+    CATHODE_PORT.OUTSET = CAT0_bm;
+    CATHODE_PORT.OUTCLR = CAT1_bm;
 }
