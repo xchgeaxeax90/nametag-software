@@ -23,6 +23,7 @@ void init_timer(void){
 }
 
 ISR(TCB0_INT_vect) {
+    multiplex_update();
 
     // Clear the CAPT interrupt
     TCB0.INTFLAGS = TCB_CAPT_bm;

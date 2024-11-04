@@ -1,0 +1,17 @@
+* Datasheets and application notes:
+  - AVR16DD20 Datasheet: https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/AVR32-16DD20-14-Complete-DataSheet-DS40002413.pdf
+  - Getting started with TCA Technical Brief: https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ApplicationNotes/ApplicationNotes/TB3217-Getting-Started-with-TCA-DS90003217.pdf
+    - This will be used to drive the 6 PWM channels controlling the
+      lights on the face. Two sets of lights (the eyes and top l/r)
+      are shared and will be multiplexed
+  - Getting started with TCB Technical Brief: https://ww1.microchip.com/downloads/en/DeviceDoc/TB3214-Getting-Started-with-TCB-90003214A.pdf
+    - This timer (of which there are two) will be used to generate a
+      periodic interrupt to switch between the eye and top l/r multiplexing
+  - Getting started with TCD Technical Brief: https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ApplicationNotes/ApplicationNotes/TB3212-Getting-Started-with-TCD-DS90003212.pdf
+    - This timer will be used to generate the PWM signals for the penlights
+  - Getting started with RTC Technical Brief: https://ww1.microchip.com/downloads/en/Appnotes/TB3213-Getting-Started-with-RTC-DS90003213B.pdf
+    - This may or may not be used to trigger a PWM setting update -
+      Either this, the second timer B, or an extra counter and hook
+      into the multiplex interrupt will do it
+  - Hacking an Attiny817XPlained to be a UPDI programmer: https://www.jsykora.info/2019/04/avr-updi-programmer-from-attiny817-xplained-mini/
+  - Generating PWM signals with TCD Appnote: https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ApplicationNotes/ApplicationNotes/Generating-PWMSignals-Using-TCD-with-HF-Input-DS90003236C.pdf

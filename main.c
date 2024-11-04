@@ -7,7 +7,6 @@
 
 
 void init_clock();
-void init_pins();
 
 pwm_settings_t pwm_settings;
 
@@ -24,6 +23,7 @@ int main(void){
     init_clock();
 
     init_pins();
+    init_button_interrupt();
 
     init_pwm();
 
@@ -56,13 +56,3 @@ void init_clock(void){
 
 }
 
-void init_pins(void){
-    PORTA.DIR = 0xFF;
-    PORTD.DIR = PIN4_bm | PIN5_bm;
-    PORTC.DIR = 0;
-
-    // Select the cathode controlling the top by driving CAT1 LOW. 
-    eye_en = 0;
-    CATHODE_PORT.OUTSET = CAT0_bm;
-    CATHODE_PORT.OUTCLR = CAT1_bm;
-}
