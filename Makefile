@@ -8,8 +8,8 @@ all: main.hex
 %.o: %.c
 	$(CC) $(CFLAGS) $< -o $@
 
-main.elf: main.o
-	$(CC) -mmcu=$(MCU) -o $@ $<
+main.elf: main.o fuses.o pwm.o
+	$(CC) -mmcu=$(MCU) -o $@ $^
 	avr-size $@
 
 main.hex: main.elf
