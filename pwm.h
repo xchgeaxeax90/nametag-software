@@ -19,3 +19,4 @@ typedef struct _pwm_settings_t {
 
 void write_pwm(const __flash pwm_settings_t *pwm_settings);
 void write_pwm_multiplexed(const __flash pwm_settings_t *pwm_settings, uint8_t eye_sel);
+void select_brightness(void);

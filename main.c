@@ -5,6 +5,7 @@
 #include "pins.h"
 #include "timer.h"
 #include "animation.h"
+#include "state_machine.h"
 
 
 void init_clock();
@@ -67,8 +68,13 @@ int main(void){
 	uint16_t timeout = button_timeout;
 	uint8_t state = button_state;
 	sei();
-	if(state == 0 && timeout > 50 && timeout < 300){
-	    select_animation();
+	if(state == 0 && timeout > 20 && timeout < 300){
+	    short_button_press();
+	}
+	else if(state == 0 && timeout > 300 && timeout < 700){
+	    long_button_press();
+	}
+	if(state == 0 && timeout != 0){
 	    cli();
 	    button_timeout = 0;
 	    sei();

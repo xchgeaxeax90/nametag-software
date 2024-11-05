@@ -1,7 +1,7 @@
 CC := avr-gcc
 MCU := avr16dd20
 FREQUENCY:=1000000
-CFLAGS := -Os -mmcu=$(MCU) -c -DF_CPU=$(FREQUENCY) -MMD -MP -Wall 
+CFLAGS := -Os -mmcu=$(MCU) -c -DF_CPU=$(FREQUENCY) -MMD -MP -Wall -Wextra -pedantic
 LDFLAGS := -mmcu=$(MCU) -Os
 
 srcs = $(wildcard *.c)
@@ -13,7 +13,7 @@ all: main.hex
 %.o: %.c
 	$(CC) $(CFLAGS) $< -o $@
 
-main.elf: main.o fuses.o pwm.o timer.o pins.o animation.o
+main.elf: main.o fuses.o pwm.o timer.o pins.o animation.o state_machine.o
 	$(CC) $(LDFLAGS) -o $@ $^
 	avr-size $@
 

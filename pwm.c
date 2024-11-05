@@ -1,6 +1,13 @@
 #include <avr/io.h>
 #include "pwm.h"
 
+static uint8_t brightness = 0xff;
+
+uint8_t scale_pwm(uint8_t pwm_in){
+    uint16_t product = pwm_in * brightness;
+    return product >> 8;
+}
+
 // Taken almost straight from the TCA Technical Brief
 static void init_timera(void){
     // Set port mux
@@ -65,25 +72,32 @@ void init_pwm(void){
 }
 
 void write_pwm(const __flash pwm_settings_t *pwm_settings){
-    TCA0.SPLIT.LCMP0 = pwm_settings->face_bot_c;
-    TCA0.SPLIT.LCMP1 = pwm_settings->face_bot_r;
-    TCA0.SPLIT.LCMP2 = pwm_settings->face_top_c;
-    TCA0.SPLIT.HCMP0 = pwm_settings->face_bot_l;
+    TCA0.SPLIT.LCMP0 = scale_pwm(pwm_settings->face_bot_c);
+    TCA0.SPLIT.LCMP1 = scale_pwm(pwm_settings->face_bot_r);
+    TCA0.SPLIT.LCMP2 = scale_pwm(pwm_settings->face_top_c);
+    TCA0.SPLIT.HCMP0 = scale_pwm(pwm_settings->face_bot_l);
 
     timerd_command_sync();
-    TCD0.CMPASET = 255-pwm_settings->light_l;
-    TCD0.CMPBSET = 255-pwm_settings->light_r;
+    TCD0.CMPASET = 255-scale_pwm(pwm_settings->light_l);
+    TCD0.CMPBSET = 255-scale_pwm(pwm_settings->light_r);
     TCD0.CMPBCLRH = 0;
 }
 
 
 void write_pwm_multiplexed(const __flash pwm_settings_t *pwm_settings, uint8_t eye_sel){
     if(eye_sel){
-	TCA0.SPLIT.HCMP1 = pwm_settings->eye_r;
-	TCA0.SPLIT.HCMP2 = pwm_settings->eye_l;
+	TCA0.SPLIT.HCMP1 = scale_pwm(pwm_settings->eye_r);
+	TCA0.SPLIT.HCMP2 = scale_pwm(pwm_settings->eye_l);
     } else {
-	TCA0.SPLIT.HCMP1 = pwm_settings->face_top_r;
-	TCA0.SPLIT.HCMP2 = pwm_settings->face_top_l;
+	TCA0.SPLIT.HCMP1 = scale_pwm(pwm_settings->face_top_r);
+	TCA0.SPLIT.HCMP2 = scale_pwm(pwm_settings->face_top_l);
     }
 
+}
+
+void select_brightness(void){
+    if(brightness <= 0x20)
+	brightness = 0xff;
+    else
+	brightness = brightness / 2;
 }
