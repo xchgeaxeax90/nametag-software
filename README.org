@@ -13,5 +13,9 @@
     - This may or may not be used to trigger a PWM setting update -
       Either this, the second timer B, or an extra counter and hook
       into the multiplex interrupt will do it
+  - Getting started with CCL Technical Brief: https://ww1.microchip.com/downloads/en/AppNotes/TB3218-Getting-Started-with-CCL-90003218A.pdf
+    - This might be needed to debounce/filter the signal from the
+      button (which conveniently is on a CCL input, totally by accident)
+  
   - Hacking an Attiny817XPlained to be a UPDI programmer: https://www.jsykora.info/2019/04/avr-updi-programmer-from-attiny817-xplained-mini/
   - Generating PWM signals with TCD Appnote: https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ApplicationNotes/ApplicationNotes/Generating-PWMSignals-Using-TCD-with-HF-Input-DS90003236C.pdf

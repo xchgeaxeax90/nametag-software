@@ -23,7 +23,7 @@ int main(void){
     init_clock();
 
     init_pins();
-    init_button_interrupt();
+    //init_button_interrupt();
 
     init_pwm();
 
@@ -33,13 +33,18 @@ int main(void){
     pwm_settings.light_r = 0x20;
     pwm_settings.face_top_l = 0x40;
     pwm_settings.face_top_r = 0x50;
+    pwm_settings.face_top_c = 0x20;
     pwm_settings.eye_l = 0x20;
     pwm_settings.eye_r = 0x10;
+    pwm_settings.face_bot_l = 0x08;
+    pwm_settings.face_bot_c = 0x10;
+    pwm_settings.face_bot_r = 0x18;
+    write_pwm(&pwm_settings);
+    write_pwm_multiplexed(&pwm_settings, 0);
 
     sei();
     while(1){
-	PORTD.OUTTGL = PIN4_bm | PIN5_bm;
-	_delay_ms(100);
+	_delay_ms(500);
 
     }
 }

@@ -1,7 +1,8 @@
 CC := avr-gcc
 MCU := avr16dd20
 FREQUENCY:=1000000
-CFLAGS := -Os -mmcu=$(MCU) -c -DF_CPU=$(FREQUENCY) -MMD -MP
+CFLAGS := -Os -mmcu=$(MCU) -c -DF_CPU=$(FREQUENCY) -MMD -MP -flto -Wall 
+LDFLAGS := -mmcu=$(MCU) -flto -Os
 
 srcs = $(wildcard *.c)
 objs = $(srcs:.c=.o)
@@ -13,7 +14,7 @@ all: main.hex
 	$(CC) $(CFLAGS) $< -o $@
 
 main.elf: main.o fuses.o pwm.o timer.o pins.o
-	$(CC) -mmcu=$(MCU) -o $@ $^
+	$(CC) $(LDFLAGS) -o $@ $^
 	avr-size $@
 
 main.hex: main.elf
@@ -23,5 +24,10 @@ main.hex: main.elf
 .PHONY: clean
 clean:
 	rm -rf *.hex *.elf *.o *.d
+
+.PHONY: prog
+prog: main.hex
+	avrdude -c serialupdi -P /dev/ttyUSB0 -p avr16dd20 -B 230400 -U flash:w:main.hex:i
+
 
 -include $(deps)
