@@ -12,6 +12,8 @@ void init_pins(void){
 
     PWM67_PORT.DIRSET = PWM6_bm | PWM7_bm;
     BTN_PORT.DIRCLR = BTN_bm;
+    BTN_PORT.PINCONFIG = PORT_PULLUPEN_bm | PORT_INVEN_bm;
+    BTN_PORT.PINCTRLUPD = BTN_bm;
 
     // Select the cathode controlling the top by driving CAT1 LOW. 
     CATHODE_PORT.OUTSET = CAT0_bm;
@@ -20,8 +22,6 @@ void init_pins(void){
 
 void init_button_interrupt(void){
     // Set the button pin as a pin change interrupt on both edges, and enable the pullup
-    BTN_PORT.PINCONFIG = PORT_PULLUPEN_bm | PORT_ISC_BOTHEDGES_gc;
-    BTN_PORT.PINCTRLUPD = BTN_bm;
 
 }
 

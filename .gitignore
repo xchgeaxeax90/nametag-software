@@ -5,3 +5,4 @@
 **/*.d
 .env
 *.bin
+**/__pycache__/

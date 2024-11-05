@@ -1,8 +1,8 @@
 CC := avr-gcc
 MCU := avr16dd20
 FREQUENCY:=1000000
-CFLAGS := -Os -mmcu=$(MCU) -c -DF_CPU=$(FREQUENCY) -MMD -MP -flto -Wall 
-LDFLAGS := -mmcu=$(MCU) -flto -Os
+CFLAGS := -Os -mmcu=$(MCU) -c -DF_CPU=$(FREQUENCY) -MMD -MP -Wall 
+LDFLAGS := -mmcu=$(MCU) -Os
 
 srcs = $(wildcard *.c)
 objs = $(srcs:.c=.o)

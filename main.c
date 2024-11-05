@@ -8,10 +8,25 @@
 
 
 void init_clock();
+volatile uint16_t button_timeout = 0;
+volatile uint8_t button_state = 0;
+void poll_button(void){
+    if(BTN_PORT.IN & BTN_bm){
+	if(!button_state){
+	    button_timeout = 0;
+	} else {
+	    button_timeout += 1;
+	}
+	button_state = 1;
+    } else {
+	button_state = 0;
+    }
+}
 
 // Called periodically by TCB0 to update the multiplexing for the eyes and top LEDs
 static volatile uint8_t eye_en = 0;
 void multiplex_update(void){
+    poll_button();
     CATHODE_PORT.OUTSET = CAT0_bm | CAT1_bm;
     // Toggle the multiplex driver pins
     if(update_animation()){
@@ -48,7 +63,17 @@ int main(void){
 
     sei();
     while(1){
-	_delay_ms(500);
+	cli();
+	uint16_t timeout = button_timeout;
+	uint8_t state = button_state;
+	sei();
+	if(state == 0 && timeout > 50 && timeout < 300){
+	    select_animation();
+	    cli();
+	    button_timeout = 0;
+	    sei();
+	}
+	_delay_ms(10);
 
     }
 }

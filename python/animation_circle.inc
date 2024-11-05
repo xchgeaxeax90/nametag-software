@@ -1,4 +1,4 @@
-const __flash animation_data_t animation[] = {
+const __flash animation_data_t animation_circle[] = {
 {{   0,   0, 166, 166,   0,   0,   0, 127, 239, 180}, .timeout = 15},
 {{   2,   2, 248, 248,   0,   0,   0,  33, 254, 235}, .timeout = 15},
 {{  45,  45,  88,  88,   0,   0,   0,   0, 231, 255}, .timeout = 15},
