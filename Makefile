@@ -13,7 +13,7 @@ all: main.hex
 %.o: %.c
 	$(CC) $(CFLAGS) $< -o $@
 
-main.elf: main.o fuses.o pwm.o timer.o pins.o
+main.elf: main.o fuses.o pwm.o timer.o pins.o animation.o
 	$(CC) $(LDFLAGS) -o $@ $^
 	avr-size $@
 
