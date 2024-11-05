@@ -33,4 +33,7 @@
 #define BTN_bm PIN1_bm
 
 void init_pins(void);
-void init_button_interrupt(void);
+void enable_button_interrupt(void);
+void disable_button_interrupt(void);
+
+void disable_pins(void);

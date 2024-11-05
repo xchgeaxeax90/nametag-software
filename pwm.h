@@ -3,6 +3,7 @@
 #include <avr/io.h>
 
 void init_pwm(void);
+void stop_pwm(void);
 
 typedef struct _pwm_settings_t {
     uint8_t light_l;

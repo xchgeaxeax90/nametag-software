@@ -71,6 +71,14 @@ void init_pwm(void){
     init_timerd();
 }
 
+void stop_pwm(void){
+    TCA0.SPLIT.CTRLB = 0;
+    TCA0.SPLIT.CTRLA &= TCA_SPLIT_ENABLE_bm;
+    timerd_enable_sync();
+    TCD0.CTRLA &= ~(TCD_ENABLE_bm);
+    _PROTECTED_WRITE(TCD0.FAULTCTRL, TCD_CMPCEN_bm | TCD_CMPDEN_bm);
+}
+
 void write_pwm(const __flash pwm_settings_t *pwm_settings){
     TCA0.SPLIT.LCMP0 = scale_pwm(pwm_settings->face_bot_c);
     TCA0.SPLIT.LCMP1 = scale_pwm(pwm_settings->face_bot_r);

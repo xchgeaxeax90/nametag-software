@@ -1,5 +1,6 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <avr/sleep.h>
 #include <util/delay.h>
 #include "pwm.h"
 #include "pins.h"
@@ -51,6 +52,17 @@ ISR(TCA0_HUNF_vect) {
     TCA0.SPLIT.INTCTRL = 0;
 }
 
+void deep_sleep(void){
+    stop_pwm();
+    disable_pins();
+    enable_button_interrupt();
+    set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+    sleep_mode();
+    disable_button_interrupt();
+    init_pins();
+    init_pwm();
+}
+
 
 int main(void){
     init_clock();
@@ -74,13 +86,21 @@ int main(void){
 	else if(state == 0 && timeout > 300 && timeout < 700){
 	    long_button_press();
 	}
+	if(state == 1 && timeout > 700){
+	    cli();
+	    button_timeout = 0;
+	    sei();
+	    timeout = 0;
+	    state = 0;
+	    deep_sleep();
+	}
 	if(state == 0 && timeout != 0){
 	    cli();
 	    button_timeout = 0;
 	    sei();
 	}
-	_delay_ms(10);
-
+	set_sleep_mode(SLEEP_MODE_IDLE);
+	sleep_mode();
     }
 }
 

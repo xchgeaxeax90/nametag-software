@@ -20,9 +20,19 @@ void init_pins(void){
     CATHODE_PORT.OUTCLR = CAT1_bm;
 }
 
-void init_button_interrupt(void){
-    // Set the button pin as a pin change interrupt on both edges, and enable the pullup
+void disable_pins(void){
+    PORTA.DIR = 0;
+    PORTC.DIR = 0;
+    PORTD.DIR = 0;
+}
 
+void enable_button_interrupt(void){
+    BTN_PORT.PINCONFIG = PORT_PULLUPEN_bm | PORT_INVEN_bm | PORT_ISC_RISING_gc;
+    BTN_PORT.PINCTRLUPD = BTN_bm;
+}
+void disable_button_interrupt(void){
+    BTN_PORT.PINCONFIG = PORT_PULLUPEN_bm | PORT_INVEN_bm;
+    BTN_PORT.PINCTRLUPD = BTN_bm;
 }
 
 
