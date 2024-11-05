@@ -12,15 +12,29 @@ void init_clock();
 // Called periodically by TCB0 to update the multiplexing for the eyes and top LEDs
 static volatile uint8_t eye_en = 0;
 void multiplex_update(void){
+    CATHODE_PORT.OUTSET = CAT0_bm | CAT1_bm;
     // Toggle the multiplex driver pins
-    CATHODE_PORT.OUTTGL = CAT0_bm | CAT1_bm;
-    eye_en = ~eye_en;
     if(update_animation()){
 
 	write_pwm(&animation_ptr->pwm_settings);
     }
-    write_pwm_multiplexed(&animation_ptr->pwm_settings, eye_en);
+    write_pwm_multiplexed(&animation_ptr->pwm_settings, ~eye_en);
+    eye_en = ~eye_en;
+    // Set the actual multiplex pins on the TCA interrupt, so they're synced to the PWM period
+    TCA0.SPLIT.INTFLAGS = TCA_SPLIT_HUNF_bm;
+    TCA0.SPLIT.INTCTRL = TCA_SPLIT_HUNF_bm;
 }
+
+ISR(TCA0_HUNF_vect) {
+    if(eye_en){
+	CATHODE_PORT.OUTCLR = CAT0_bm;
+    } else {
+	CATHODE_PORT.OUTCLR = CAT1_bm;
+    }
+    TCA0.SPLIT.INTFLAGS = TCA_SPLIT_HUNF_bm;
+    TCA0.SPLIT.INTCTRL = 0;
+}
+
 
 int main(void){
     init_clock();

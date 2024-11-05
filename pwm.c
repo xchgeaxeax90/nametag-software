@@ -11,6 +11,9 @@ static void init_timera(void){
     // Enable all PWM outputs
     TCA0.SPLIT.CTRLB = TCA_SPLIT_HCMP0EN_bm | TCA_SPLIT_HCMP1EN_bm | TCA_SPLIT_HCMP2EN_bm |
 	TCA_SPLIT_LCMP0EN_bm | TCA_SPLIT_LCMP1EN_bm | TCA_SPLIT_LCMP2EN_bm;
+
+    TCA0.SPLIT.INTCTRL = TCA_SPLIT_HUNF_bm;
+
     // Configure both halves of the timer for a full period
     TCA0.SPLIT.HPER = 0xff;
     TCA0.SPLIT.LPER = 0xff;
