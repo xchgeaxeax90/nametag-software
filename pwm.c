@@ -61,7 +61,7 @@ void init_pwm(void){
     init_timerd();
 }
 
-void write_pwm(const pwm_settings_t *pwm_settings){
+void write_pwm(const __flash pwm_settings_t *pwm_settings){
     TCA0.SPLIT.LCMP0 = pwm_settings->face_bot_c;
     TCA0.SPLIT.LCMP1 = pwm_settings->face_bot_r;
     TCA0.SPLIT.LCMP2 = pwm_settings->face_top_c;
@@ -74,7 +74,7 @@ void write_pwm(const pwm_settings_t *pwm_settings){
 }
 
 
-void write_pwm_multiplexed(const pwm_settings_t *pwm_settings, uint8_t eye_sel){
+void write_pwm_multiplexed(const __flash pwm_settings_t *pwm_settings, uint8_t eye_sel){
     if(eye_sel){
 	TCA0.SPLIT.HCMP1 = pwm_settings->eye_r;
 	TCA0.SPLIT.HCMP2 = pwm_settings->eye_l;

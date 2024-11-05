@@ -2,11 +2,8 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 
-const animation_data_t animation[] = {
-    {{.light_l = 100, .light_r = 0}, .timeout = 200},
-    {{.light_l = 0, .light_r = 100}, .timeout = 200},
-};
-const animation_data_t *animation_ptr = &animation[0];
+#include "python/animation.inc"
+const __flash animation_data_t *animation_ptr = &animation[0];
 
 uint16_t timeout_counter = 0;
 uint8_t animation_idx = 0;
