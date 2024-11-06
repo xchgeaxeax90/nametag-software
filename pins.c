@@ -6,6 +6,11 @@ void init_pins(void){
     PORTA.DIR = 0;
     PORTC.DIR = 0;
     PORTD.DIR = 0;
+    PORTA.PINCONFIG = PORT_ISC_INPUT_DISABLE_gc;
+    PORTD.PINCONFIG = PORT_ISC_INPUT_DISABLE_gc;
+    PORTA.PINCTRLCLR = 0xff;
+    PORTD.PINCTRLCLR = 0xff;
+
 
     PWM0to5_PORT.DIRSET = PWM0_bm | PWM1_bm | PWM2_bm | PWM3_bm | PWM4_bm | PWM5_bm;
     CATHODE_PORT.DIRSET = CAT0_bm | CAT1_bm;
@@ -24,6 +29,11 @@ void disable_pins(void){
     PORTA.DIR = 0;
     PORTC.DIR = 0;
     PORTD.DIR = 0;
+    PORTA.PINCONFIG = PORT_ISC_INPUT_DISABLE_gc;
+    PORTD.PINCONFIG = PORT_ISC_INPUT_DISABLE_gc;
+    PORTA.PINCTRLSET = 0xff;
+    PORTD.PINCTRLSET = 0xff;
+
 }
 
 void enable_button_interrupt(void){

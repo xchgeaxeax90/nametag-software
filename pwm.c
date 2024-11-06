@@ -1,7 +1,7 @@
 #include <avr/io.h>
 #include "pwm.h"
 
-static uint8_t brightness = 0xff;
+static uint8_t brightness = 0x40;
 
 uint8_t scale_pwm(uint8_t pwm_in){
     uint16_t product = pwm_in * brightness;
@@ -24,10 +24,10 @@ static void init_timera(void){
     // Configure both halves of the timer for a full period
     TCA0.SPLIT.HPER = 0xff;
     TCA0.SPLIT.LPER = 0xff;
-    TCA0.SPLIT.LCMP0 = 0x20;
-    TCA0.SPLIT.HCMP0 = 0x20;
+    TCA0.SPLIT.LCMP0 = 0;
+    TCA0.SPLIT.HCMP0 = 0;
     // With a 1MHz clock, the PWM will have a period of 3KHz, which seems like plenty
-    TCA0.SPLIT.CTRLA = TCA_SPLIT_RUNSTDBY_bm | TCA_SPLIT_CLKSEL_DIV1_gc | TCA_SPLIT_ENABLE_bm;
+    TCA0.SPLIT.CTRLA = TCA_SPLIT_CLKSEL_DIV1_gc | TCA_SPLIT_ENABLE_bm;
 }
 
 static void timerd_enable_sync(void){
@@ -50,8 +50,8 @@ static void init_timerd(void){
     // Enable CMPC and CMPD outputs
     _PROTECTED_WRITE(TCD0.FAULTCTRL, TCD_CMPCEN_bm | TCD_CMPDEN_bm);
 
-    TCD0.CMPASET = 0x60;
-    TCD0.CMPBSET = 0x40;
+    TCD0.CMPASET = 0xff;
+    TCD0.CMPBSET = 0xff;
     TCD0.CMPACLR = 0xff;
     TCD0.CMPBCLR = 0xff;
 

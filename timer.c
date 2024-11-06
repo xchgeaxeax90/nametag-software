@@ -19,8 +19,13 @@ void init_timer(void){
 
 
     // Enable, use TCA0's clock source
-    TCB0.CTRLA = TCB_ENABLE_bm | TCB_CLKSEL_TCA0_gc | TCB_RUNSTDBY_bm;
+    TCB0.CTRLA = TCB_ENABLE_bm | TCB_CLKSEL_TCA0_gc;
 }
+
+void disable_timer(void){
+    TCB0.CTRLA &= ~(TCB_ENABLE_bm);
+}
+
 
 ISR(TCB0_INT_vect) {
     multiplex_update();

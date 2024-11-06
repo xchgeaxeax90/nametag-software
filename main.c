@@ -55,11 +55,13 @@ ISR(TCA0_HUNF_vect) {
 void deep_sleep(void){
     stop_pwm();
     disable_pins();
+    disable_timer();
     enable_button_interrupt();
     set_sleep_mode(SLEEP_MODE_PWR_DOWN);
     sleep_mode();
     disable_button_interrupt();
     init_pins();
+    init_timer();
     init_pwm();
 }
 
@@ -86,12 +88,7 @@ int main(void){
 	if(state == 0 && timeout >= 300 && timeout < 700){
 	    long_button_press();
 	}
-	if(state == 1 && timeout >= 700){
-	    cli();
-	    button_timeout = 0;
-	    sei();
-	    timeout = 0;
-	    state = 0;
+	if(state == 0 && timeout >= 700){
 	    deep_sleep();
 	}
 	if(state == 0 && timeout != 0){
