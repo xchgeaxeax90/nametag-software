@@ -11,3 +11,4 @@ extern const __flash animation_data_t *animation_ptr;
 uint8_t update_animation(void);
 
 void select_animation(void);
+void select_on_animation(void);

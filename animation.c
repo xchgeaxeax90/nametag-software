@@ -4,14 +4,22 @@
 
 #include "python/animation_circle.inc"
 #include "python/animation_breathe.inc"
+const __flash animation_data_t animation_on[] = {
+    {{ 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}, .timeout = 10}
+};
 
 const __flash animation_data_t* animation_array[] = {
     animation_circle,
-    animation_breathe
+    animation_breathe,
+    animation_on
 };
+const uint8_t max_animation_select = 2;
+
+
 const __flash uint8_t animation_sizes[] = {
     sizeof(animation_circle)/sizeof(animation_circle[0]),
     sizeof(animation_breathe)/sizeof(animation_breathe[0]),
+    sizeof(animation_on)/sizeof(animation_on[0]),
 };
 
 const __flash animation_data_t *animation_ptr = &animation_circle[0];
@@ -39,9 +47,17 @@ uint8_t update_animation(void){
 void select_animation(void){
     cli();
     selected_animation += 1;
-    if(selected_animation >= sizeof(animation_sizes)/sizeof(animation_sizes[0])){
+    if(selected_animation >= max_animation_select){
 	selected_animation = 0;
     }
+    animation_idx = 0;
+    timeout_counter = 0;
+    sei();
+}
+
+void select_on_animation(void){
+    cli();
+    selected_animation = max_animation_select;
     animation_idx = 0;
     timeout_counter = 0;
     sei();

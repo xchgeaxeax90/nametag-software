@@ -19,9 +19,11 @@ void short_button_press(void){
 void long_button_press(void){
     switch(state){
     case STATE_ANIMATION_SEL:
+	select_on_animation();
 	state = STATE_BRIGHTNESS_SEL;
 	break;
     case STATE_BRIGHTNESS_SEL:
+	select_animation();
 	state = STATE_ANIMATION_SEL;
 	break;
     }

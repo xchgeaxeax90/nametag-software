@@ -104,7 +104,7 @@ void write_pwm_multiplexed(const __flash pwm_settings_t *pwm_settings, uint8_t e
 }
 
 void select_brightness(void){
-    if(brightness <= 0x20)
+    if(brightness <= 0x8)
 	brightness = 0xff;
     else
 	brightness = brightness / 2;

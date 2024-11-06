@@ -83,10 +83,10 @@ int main(void){
 	if(state == 0 && timeout > 20 && timeout < 300){
 	    short_button_press();
 	}
-	else if(state == 0 && timeout > 300 && timeout < 700){
+	if(state == 0 && timeout >= 300 && timeout < 700){
 	    long_button_press();
 	}
-	if(state == 1 && timeout > 700){
+	if(state == 1 && timeout >= 700){
 	    cli();
 	    button_timeout = 0;
 	    sei();
