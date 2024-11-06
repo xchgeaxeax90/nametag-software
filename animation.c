@@ -4,6 +4,10 @@
 
 #include "python/animation_circle.inc"
 #include "python/animation_breathe.inc"
+#include "python/animation_wave.inc"
+#include "python/animation_blink.inc"
+
+
 const __flash animation_data_t animation_on[] = {
     {{ 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}, .timeout = 10}
 };
@@ -11,14 +15,18 @@ const __flash animation_data_t animation_on[] = {
 const __flash animation_data_t* animation_array[] = {
     animation_circle,
     animation_breathe,
+    animation_wave,
+    animation_blink,
     animation_on
 };
-const uint8_t max_animation_select = 2;
+const uint8_t max_animation_select = 4;
 
 
 const __flash uint8_t animation_sizes[] = {
     sizeof(animation_circle)/sizeof(animation_circle[0]),
     sizeof(animation_breathe)/sizeof(animation_breathe[0]),
+    sizeof(animation_wave)/sizeof(animation_wave[0]),
+    sizeof(animation_blink)/sizeof(animation_blink[0]),
     sizeof(animation_on)/sizeof(animation_on[0]),
 };
 
