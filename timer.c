@@ -25,11 +25,3 @@ void init_timer(void){
 void disable_timer(void){
     TCB0.CTRLA &= ~(TCB_ENABLE_bm);
 }
-
-
-ISR(TCB0_INT_vect) {
-    multiplex_update();
-
-    // Clear the CAPT interrupt
-    TCB0.INTFLAGS = TCB_CAPT_bm;
-}

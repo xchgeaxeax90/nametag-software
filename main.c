@@ -27,7 +27,8 @@ void poll_button(void){
 
 // Called periodically by TCB0 to update the multiplexing for the eyes and top LEDs
 static volatile uint8_t eye_en = 0;
-void multiplex_update(void){
+
+ISR(TCB0_INT_vect) {
     poll_button();
     CATHODE_PORT.OUTSET = CAT0_bm | CAT1_bm;
     // Toggle the multiplex driver pins
@@ -40,6 +41,7 @@ void multiplex_update(void){
     // Set the actual multiplex pins on the TCA interrupt, so they're synced to the PWM period
     TCA0.SPLIT.INTFLAGS = TCA_SPLIT_HUNF_bm;
     TCA0.SPLIT.INTCTRL = TCA_SPLIT_HUNF_bm;
+    TCB0.INTFLAGS = TCB_CAPT_bm;
 }
 
 ISR(TCA0_HUNF_vect) {
@@ -64,7 +66,6 @@ void deep_sleep(void){
     init_timer();
     init_pwm();
 }
-
 
 int main(void){
     init_clock();
