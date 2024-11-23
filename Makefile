@@ -27,7 +27,7 @@ clean:
 
 .PHONY: prog
 prog: main.hex
-	avrdude -c serialupdi -P /dev/ttyUSB0 -p avr16dd20 -B 230400 -U flash:w:main.hex:i
+	avrdude -c serialupdi -P /dev/ttyUSB0 -p avr16dd20 -B 115200 -U flash:w:main.hex:i
 
 
 -include $(deps)

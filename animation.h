@@ -12,3 +12,4 @@ uint8_t update_animation(void);
 
 void select_animation(void);
 void select_on_animation(void);
+void select_off_animation(void);

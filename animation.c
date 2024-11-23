@@ -11,13 +11,17 @@
 const __flash animation_data_t animation_on[] = {
     {{ 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}, .timeout = 10}
 };
+const __flash animation_data_t animation_off[] = {
+    {{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, .timeout = 10}
+};
 
 const __flash animation_data_t* animation_array[] = {
     animation_circle,
     animation_breathe,
     animation_wave,
     animation_blink,
-    animation_on
+    animation_on,
+    animation_off
 };
 const uint8_t max_animation_select = 4;
 
@@ -66,6 +70,14 @@ void select_animation(void){
 void select_on_animation(void){
     cli();
     selected_animation = max_animation_select;
+    animation_idx = 0;
+    timeout_counter = 0;
+    sei();
+}
+
+void select_off_animation(void){
+    cli();
+    selected_animation = max_animation_select+1;
     animation_idx = 0;
     timeout_counter = 0;
     sei();
