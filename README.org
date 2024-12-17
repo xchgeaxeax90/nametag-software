@@ -1,5 +1,7 @@
 #+title: Wisp Light-up Nametag
 
+[[./img/nametag_gea.jpg]]
+
 This repository contains the PCB design and software for the light up
 nametag I gave out at AWA. Gerbers for the blank badge I gave out are
 available, and the Kicad project is available for you to modify the
