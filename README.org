@@ -173,6 +173,12 @@ Lower ~-B 115200~ if having issues with flaky programming
 If successful, your badge should begin flashing
 
 
+Some method of affixing the nametag to your body will be needed. A
+slot is available on the top of the PCB for affixing to a
+lanyard. Alternatively (this is what I did) a
+[[https://www.ebay.com/itm/183618333854?_skw=magnetic+nametag+holder&itmmeta=01JF978J9D4CN58SRMX7CEVARF&hash=item2ac0816c9e:g:nFcAAOSwXINlhPe9&itmprp=enc%3AAQAJAAAA8HoV3kP08IDx%2BKZ9MfhVJKl8eDQyYYDvol0xfGkntdjdzYvc0itx%2FD3jzu9YclMZHiFoQXJTQXiDHWaCkl4CLsYIJimluLo76ASOEXKf9XbWaN%2BV97hdnUI7nPHgzphf0ATnBnSQKf7LFTNqUwUBqT2fCNQZ61JnggNFSEFKr2nlNvgJ57GA0NNvB9OqA0clghpYkS2cRdJ%2Fccp7r6FvBFtUaCyiOOLuyghwAWVIA36d9Cy7unBkUYBuOrZrZOrXO7lZsI0u%2BokIqlwvbhUpUzIA8JHnnUC3vIXqY5d7WG2Wd8%2BUSAdzqg2mJIyuA5SDew%3D%3D%7Ctkp%3ABFBM5qSip_pk][magnetic nametag holder]] or pin should be used
+
+
 ** Modifying the source code
 LMAO good luck
 
